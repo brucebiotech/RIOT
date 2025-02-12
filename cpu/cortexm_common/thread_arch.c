@@ -132,7 +132,13 @@ extern uint32_t _sstack;
  * @brief   ARM Cortex-M specific exception return value, that triggers the
  *          return to the task mode stack pointer
  */
-#define EXCEPT_RET_TASK_MODE        (0xfffffffd)
+#ifdef ARMV8_TRUSTZONE_NON_SECURE
+# define EXCEPT_RET_TASK_MODE        (0xffffffbc)
+#else
+# define EXCEPT_RET_TASK_MODE        (0xfffffffd)
+#endif
+
+//#define EXCEPT_RET_TASK_MODE        (0xfffffffd)
 
 char *thread_stack_init(thread_task_func_t task_func,
                              void *arg,

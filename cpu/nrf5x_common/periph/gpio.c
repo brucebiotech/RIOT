@@ -35,22 +35,29 @@
 #include "periph_cpu.h"
 #include "periph_conf.h"
 
+#ifndef NRF_PERIPHERAL
+# define NRF_PERIPHERAL(P) P
+#endif
+
 #define PORT_BIT            (1 << 5)
 #define PIN_MASK            (0x1f)
 
 /* Compatibility wrapper defines for nRF9160 */
-#ifdef NRF_P0_S
-#define NRF_P0 NRF_P0_S
-#endif
+//#ifdef NRF_P0_S
+//#define NRF_P0 NRF_P0_S
+//#endif
 
-#ifdef NRF_P1_S
-#define NRF_P1 NRF_P1_S
-#endif
+//#ifdef NRF_P1_S
+//#define NRF_P1 NRF_P1_S
+//#endif
 
-#ifdef NRF_GPIOTE0_S
-#define NRF_GPIOTE NRF_GPIOTE0_S
-#define GPIOTE_IRQn GPIOTE0_IRQn
-#endif
+//#ifdef NRF_GPIOTE0_S
+//#define NRF_GPIOTE NRF_GPIOTE0_S
+//#define GPIOTE_IRQn GPIOTE0_IRQn
+//#endif
+
+#define NRF_GPIOTE_PERIPHERAL		NRF_PERIPHERAL(NRF_GPIOTE0)
+#define NRF_GPIOTE_INTERRUPT		GPIOTE0_IRQn	// secure, GPIOTE1_IRQn for NS
 
 #ifdef MODULE_PERIPH_GPIO_IRQ
 
@@ -87,11 +94,11 @@ static inline NRF_GPIO_Type *port(gpio_t pin)
 #if (CPU_FAM_NRF51)
     (void) pin;
     return NRF_GPIO;
-#elif defined(NRF_P1)
-    return (pin & PORT_BIT) ? NRF_P1 : NRF_P0;
+#elif defined(NRF_P1_S)
+    return (pin & PORT_BIT) ? NRF_PERIPHERAL (NRF_P1) : NRF_PERIPHERAL (NRF_P0);
 #else
     (void) pin;
-    return NRF_P0;
+    return NRF_PERIPHERAL (NRF_P0);
 #endif
 }
 

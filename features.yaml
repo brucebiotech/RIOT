@@ -262,6 +262,8 @@ groups:
           help: The MCU has an nordic nRF53 CPU
         - name: cpu_nrf9160
           help: The MCU has an nordic nRF9160 CPU
+        - name: cpu_nrf9151
+          help: The MCU has an nordic nRF9151 CPU
 
       - title: NXP Grouping
         features:

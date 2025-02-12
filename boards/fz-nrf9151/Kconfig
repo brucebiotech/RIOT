@@ -1,0 +1,24 @@
+# Copyright (c) 2025 BBT
+#
+# This file is subject to the terms and conditions of the GNU Lesser
+# General Public License v2.1. See the file LICENSE in the top level
+# directory for more details.
+
+config BOARD
+    default "fz-nrf9151" if BOARD_FZ_NRF9151
+
+config BOARD_FZ_NRF9151
+    bool
+    default y
+    select CPU_MODEL_NRF9151
+
+    # Put defined MCU peripherals here (in alphabetical order)
+    select HAS_ PERIPH_I2C
+    select HAS_PERIPH_PWM
+    select HAS_PERIPH_RTT
+    select HAS_PERIPH_SPI
+    select HAS_PERIPH_TIMER
+    select HAS_PERIPH_UART
+    select HAS_RIOTBOOT
+
+    # Put other features for this board (in alphabetical order)
