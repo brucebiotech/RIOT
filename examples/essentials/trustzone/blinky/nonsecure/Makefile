@@ -1,7 +1,7 @@
 #
 # this builds the nonsecure-state binary for the modem application
 #
-APPLICATION = modem_ns
+APPLICATION = blinky_ns
 
 # as this stage it has to be a nrf91xx based board
 BOARD ?= fz-nrf9151

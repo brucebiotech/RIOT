@@ -3,7 +3,7 @@
 #
 # we are not going to use riot
 #
-APPLICATION = modem_s
+APPLICATION = blinky_s
 BOARD := fz-nrf9151
 
 #
@@ -15,8 +15,6 @@ CFLAGS += -DTRUSTZONE_NONSECURE_STATE=1 -DTRUSTZONE_SECURE_STATE=2
 CFLAGS += -DTRUSTZONE=TRUSTZONE_SECURE_STATE
 
 CFLAGS_OPT ?= -O0
-
-#PREFIX = "C:/armgcc/2021-10.3/bin/arm-none-eabi-"
 
 #
 # avoid cmsis trustzone error/warning
