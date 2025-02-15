@@ -2,9 +2,6 @@
 ROM_LEN ?= 0x100000
 RAM_LEN ?= 0x40000
 
-# 
-LINKER_SCRIPT ?= nrf9151_nonsecure.ld
-
 FLASHFILE ?= $(BINFILE)
 
 PROGRAMMER ?= jlink

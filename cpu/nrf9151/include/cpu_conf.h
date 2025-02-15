@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Mesotic SAS
+ * Copyright (C) 2025
  *
  * This file is subject to the terms and conditions of the GNU Lesser
  * General Public License v2.1. See the file LICENSE in the top level
@@ -7,25 +7,31 @@
  */
 
 /**
- * @defgroup        cpu_nrf9160 Nordic nRF9160 MCU
+ * @defgroup        cpu_nrf9151 Nordic nRF9151 MCU
  * @ingroup         cpu
- * @brief           Nordic nRF9160 family of CPUs
+ * @brief           Nordic nRF91xx family of CPUs
  * @{
  *
  * @file
- * @brief       nRF9160 specific CPU configuration
+ * @brief       nRF9151 specific CPU configuration
  *
- * @author      Dylan Laduranty <dylan.laduranty@mesotic.com>
+ * @author      
  *
  */
 #ifndef CPU_CONF_H
 #define CPU_CONF_H
 
+/*
+ * for this idea for trustzone to work, ALL references to nrf peripherals
+ * need to use the NRF_PERIPHERAL() macro
+ *
+ * so this includes the nrf52 common code
+ *
+ */
 #if defined (TRUSTZONE)
-# if TRUSTZONE == TRUSTZONE_IS_SECURE
+# if TRUSTZONE == TRUSTZONE_SECURE_STATE
 #  define NRF_PERIPHERAL(P) P##_S
-#  error "no secure option yet"
-# elif TRUSTZONE == TRUSTZONE_IS_NONSECURE
+# elif TRUSTZONE == TRUSTZONE_NONSECURE_STATE
 #  define NRF_PERIPHERAL(P) P##_NS
 # endif
 #endif
