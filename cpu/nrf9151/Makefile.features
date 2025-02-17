@@ -2,10 +2,9 @@ CPU_CORE = cortex-m33
 CPU_FAM  = nrf9151
 
 #
-# need to pickup nrf9160 conditionals in nrf5x-common and
-# flag a non-secure build
+# need to pickup nrf9160 conditionals in nrf5x-common
 #
-CFLAGS += -DCPU_NRF9160 -DARMV8_TRUSTZONE_NON_SECURE
+CFLAGS += -DCPU_NRF9160
 
 FEATURES_PROVIDED += periph_spi_gpio_mode
 

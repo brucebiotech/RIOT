@@ -145,6 +145,21 @@ void setup_trustzone (void) {
 }
 
 int main (void) {
+
+	//
+	// This codes enables debug access, if disabled. The nrf91xx disables 
+	// debug access by default.
+	//
+	if ((NRF_PERIPHERAL (NRF_UICR)->APPROTECT) != 0x50FA50FA) {
+
+		NRF_PERIPHERAL (NRF_NVMC)->CONFIG = NVMC_CONFIG_WEN_Wen;
+		while (NRF_PERIPHERAL (NRF_NVMC)->READY == NVMC_READY_READY_Busy){}
+
+		NRF_PERIPHERAL (NRF_UICR)->APPROTECT = 0x50FA50FA;
+		
+		NRF_PERIPHERAL (NRF_NVMC)->CONFIG = NVMC_CONFIG_WEN_Ren;
+		while (NRF_PERIPHERAL (NRF_NVMC)->READY == NVMC_READY_READY_Busy){}
+	}
 	
 	setup_trustzone ();
 	start_non_secure_state ();

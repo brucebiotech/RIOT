@@ -1,5 +1,5 @@
 #
-# this builds the nonsecure-state binary for the modem application
+# this builds the nonsecure-state binary for the blinky application
 #
 APPLICATION = blinky_ns
 
@@ -20,7 +20,7 @@ CFLAGS_OPT ?= -O0
 # partition non-secure flash and ram
 #
 ROM_OFFSET = 		0x00040000
-ROM_LEN := 			0x000C0000 
+ROM_LEN = 			0x000C0000 
 RAM_START_ADDR = 	0x20003000
 RAM_LEN = 			0x0003d000
 

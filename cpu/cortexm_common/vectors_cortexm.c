@@ -213,8 +213,19 @@ void reset_handler_default(void)
     __libc_init_array();
 #endif
 
-    /* startup the kernel */
+#if defined (TRUSTZONE)
+# if TRUSTZONE == TRUSTZONE_SECURE_STATE
+	int main (void);
+	main ();
+# elif TRUSTZONE == TRUSTZONE_NONSECURE_STATE
     kernel_init();
+# else
+#  error "bad trustzone config" 
+# endif
+#else
+    kernel_init();
+#endif
+    /* startup the kernel */
 }
 
 __attribute__((weak))

@@ -1,5 +1,5 @@
 #
-# this builds the SECURE-STATE binary for the modem application
+# this builds the SECURE-STATE binary for the blinky application
 #
 # we are not going to use riot
 #
@@ -25,9 +25,9 @@ OPTIONAL_CFLAGS_BLACKLIST += -Wcast-align
 # partition secure flash and ram
 #
 ROM_OFFSET = 		0x00000000
-ROM_LEN := 			0x40000 
+ROM_LEN = 			0x00040000 
 RAM_START_ADDR = 	0x20000000
-RAM_LEN = 			0x3000
+RAM_LEN = 			0x00003000
 
 CFLAGS += -DNONSECURE_STATE_VTOR_ADDRESS=$(ROM_LEN) -mcmse
 

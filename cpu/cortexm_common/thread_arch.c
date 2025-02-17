@@ -132,11 +132,27 @@ extern uint32_t _sstack;
  * @brief   ARM Cortex-M specific exception return value, that triggers the
  *          return to the task mode stack pointer
  */
+
+#if defined (TRUSTZONE)
+# if TRUSTZONE == TRUSTZONE_SECURE_STATE
+//this is not correct
+#  define EXCEPT_RET_TASK_MODE       (0xffffffbd)
+# elif TRUSTZONE == TRUSTZONE_NONSECURE_STATE
+#  define EXCEPT_RET_TASK_MODE       (0xffffffbc)
+# else
+#  error "unsupported trustzone configuration"
+# endif
+#else
+# define EXCEPT_RET_TASK_MODE        (0xfffffffd)
+#endif
+
+/*
 #ifdef ARMV8_TRUSTZONE_NON_SECURE
 # define EXCEPT_RET_TASK_MODE        (0xffffffbc)
 #else
 # define EXCEPT_RET_TASK_MODE        (0xfffffffd)
 #endif
+*/
 
 //#define EXCEPT_RET_TASK_MODE        (0xfffffffd)
 

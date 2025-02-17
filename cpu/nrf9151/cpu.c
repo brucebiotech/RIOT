@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Mesotic SAS
+ * Copyright (C) 2025
  *
  * This file is subject to the terms and conditions of the GNU Lesser
  * General Public License v2.1. See the file LICENSE in the top level
@@ -13,7 +13,7 @@
  * @file
  * @brief       Implementation of the CPU initialization
  *
- * @author      Dylan Laduranty <dylan.laduranty@mesotic.com>
+ * @author      Gregor Bruce
  *
  * @}
  */
@@ -33,25 +33,37 @@
 #error "LFCLK init: CLOCK_LFCLK has invalid value"
 #endif
 
+#if TRUSTZONE == TRUSTZONE_SECURE_STATE
+void enable_debug_access (void) {
+	if ((NRF_PERIPHERAL (NRF_UICR)->APPROTECT) != 0x50FA50FA) {
+
+		NRF_PERIPHERAL (NRF_NVMC)->CONFIG = NVMC_CONFIG_WEN_Wen;
+		while (NRF_PERIPHERAL (NRF_NVMC)->READY == NVMC_READY_READY_Busy){}
+
+		NRF_PERIPHERAL (NRF_UICR)->APPROTECT = 0x50FA50FA;
+		
+		NRF_PERIPHERAL (NRF_NVMC)->CONFIG = NVMC_CONFIG_WEN_Ren;
+		while (NRF_PERIPHERAL (NRF_NVMC)->READY == NVMC_READY_READY_Busy){}
+	}
+}
+#endif
+
 /**
  * @brief   Initialize the CPU, set IRQ priorities
  */
 void cpu_init(void)
 {
-    /* initialize hf clock */
+#if TRUSTZONE == TRUSTZONE_SECURE_STATE
     clock_init_hf();
-
-#ifdef NVMC_ICACHECNF_CACHEEN_Msk
-    /* enable instruction cache */
-   // NRF_PERIPHERAL (NRF_NVMC)->ICACHECNF = (NVMC_ICACHECNF_CACHEEN_Msk);
+    enable_debug_access ();
 #endif
 
-    /* call cortexm default initialization */
     cortexm_init();
 
-    /* initialize stdio prior to periph_init() to allow use of DEBUG() there */
+// these only if non-secure?
+
+    /* initialize stdio */
     early_init();
 
-    /* trigger static peripheral initialization */
     periph_init();
 }
